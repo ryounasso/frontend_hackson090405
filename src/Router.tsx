@@ -1,8 +1,7 @@
 import React, { FC } from 'react'
 import { Switch, BrowserRouter, Route } from 'react-router-dom'
-import Home from './templates/Home'
-import Signin from './templates/Signin'
-import Signup from './templates/Signup'
+import Home from './pages/Home'
+import Signin from './pages/Signin'
 
 const Router: FC = () => {
   return (
@@ -10,7 +9,6 @@ const Router: FC = () => {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/signin' component={Signin} />
-        <Route exact path='/signup' component={Signup} />
       </Switch>
     </BrowserRouter>
   )
