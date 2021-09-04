@@ -1,6 +1,5 @@
 import { Button, makeStyles, TextField } from '@material-ui/core'
 import React, { FC, useEffect } from 'react'
-import { GoogleSignin } from '../firebase/api'
 import googleIcon from '../img/googleIcon.png'
 import { useHistory } from 'react-router'
 import firebase from 'firebase/app'
