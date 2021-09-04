@@ -32,7 +32,8 @@ yarn-error.log*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -67,4 +68,4 @@ Temporary Items
 # Local History for Visual Studio Code
 .history/
 
-
+.firebaserc

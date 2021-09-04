@@ -12,7 +12,7 @@ const config = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID,
 }
 
-if (!firebase.apps.length) {
+if (!firebase.app.length) {
   firebase.initializeApp(config)
 }
 
