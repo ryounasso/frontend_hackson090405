@@ -1,16 +1,24 @@
-import React, { useContext, useEffect } from 'react'
 import { firebaseContext } from '../firebase/context'
-import { useHistory } from 'react-router'
 import { auth } from '../firebase/firebase'
+import { useHistory } from 'react-router'
+import { useEffect } from 'react'
+import { Container } from '@material-ui/core'
 
 const Home = () => {
   const history = useHistory()
+
   useEffect(() => {
-    if (!auth.currentUser) {
-      history.push('/signin')
-    }
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        history.push('/signin')
+      }
+    })
   })
-  return <h1>home Page</h1>
+  return (
+    <Container maxWidth='lg'>
+        <h1>home Page</h1>
+    </Container>
+  )
 }
 
 export default Home
