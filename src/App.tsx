@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
 import Router from './Router'
-import { auth } from './firebase/firebase'
-import { withRouter, useHistory } from 'react-router'
+import { firebaseContext, useFirebase } from './firebase/context'
 
 function App() {
   return (
-    <div>
+    <firebaseContext.Provider value={useFirebase()}>
       <Router />
-    </div>
+    </firebaseContext.Provider>
   )
 }
 
