@@ -1,9 +1,12 @@
-import React from 'react';
+import Router from './Router'
+import { firebaseContext, useFirebase } from './firebase/context'
 
 function App() {
   return (
-   <h1>home</h1>
-  );
+    <firebaseContext.Provider value={useFirebase()}>
+      <Router />
+    </firebaseContext.Provider>
+  )
 }
 
-export default App;
+export default App
