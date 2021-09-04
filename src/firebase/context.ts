@@ -6,7 +6,6 @@ export const firebaseContext = createContext<any>(null)
 
 export const UseFirebase = () => {
   const [initilize, setInitilize] = useState<boolean>(true)
-
   useEffect(() => {
     //userがサインインしているか
     auth.onAuthStateChanged((user) => {
