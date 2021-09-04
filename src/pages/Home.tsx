@@ -5,6 +5,11 @@ import { auth } from '../firebase/firebase'
 
 const Home = () => {
   const history = useHistory()
+  useEffect(() => {
+    if (!auth.currentUser) {
+      history.push('/signin')
+    }
+  })
   return <h1>home Page</h1>
 }
 
