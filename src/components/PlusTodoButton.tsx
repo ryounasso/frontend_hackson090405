@@ -1,7 +1,7 @@
-import { useContext, useState, VFC } from "react"
+import { useContext, useState } from "react"
 import Button from '@material-ui/core/Button'
 import Modal from "@material-ui/core/Modal"
-import { Input } from "@material-ui/core";
+import { Input, InputLabel } from "@material-ui/core";
 import axios from "axios";
 import { AuthContext } from "../firebase/context";
 
@@ -35,7 +35,8 @@ const PlusTodoButton = (props: any) => {
     newTodo = newTodo.data
     const newTodoList = [...todoList, newTodo]
     setTodoList(newTodoList)
-    
+    setTitle('')
+    setDescription('')
     setOpen(false);
   }
 
@@ -47,13 +48,15 @@ const PlusTodoButton = (props: any) => {
         onClose={handleClose}
       >
         <div>
+          <InputLabel>タイトル</InputLabel>
           <Input type="text" value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setTitle(e.target.value);
           }} />
+          <InputLabel>説明</InputLabel>
           <Input type="text" value={description} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setDescription(e.target.value);
           }} />
-          <Button onClick={addTodo} >追加する</Button>
+          <Button onClick={addTodo} disabled={title === ''} >追加する</Button>
         </div>
       </Modal>
     </>
