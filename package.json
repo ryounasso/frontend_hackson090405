@@ -12,11 +12,9 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "axios": "^0.21.2",
     "firebase": "8.10.0",
-<<<<<<< HEAD
     "git-commit-statistics": "^2.0.0",
-=======
->>>>>>> 0b92d352263dadc1d30170e55142165b88aeaeef
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",

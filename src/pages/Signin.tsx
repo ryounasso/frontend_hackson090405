@@ -1,5 +1,5 @@
-import { Button, makeStyles, TextField } from '@material-ui/core'
-import React, { FC, useEffect } from 'react'
+import { Button, makeStyles } from '@material-ui/core'
+import  { FC } from 'react'
 import googleIcon from '../img/googleIcon.png'
 import { useHistory } from 'react-router'
 import firebase from 'firebase/app'
@@ -33,7 +33,7 @@ const Signin: FC = () => {
       await db.collection('users').doc(user?.uid).set({ uid: user?.uid })
       history.push('/')
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
   return (

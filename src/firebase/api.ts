@@ -5,9 +5,8 @@ import { auth, db } from './firebase'
 export const signout = () => {
   try {
     auth.signOut()
-    console.log('signout')
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
