@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import { firebaseContext, useFirebase } from './firebase/context'
+import { firebaseContext } from './firebase/context'
 
 ReactDOM.render(<App />, document.getElementById('root'))
