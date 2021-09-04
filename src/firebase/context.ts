@@ -4,15 +4,13 @@ import { auth } from './firebase'
 
 export const firebaseContext = createContext<any>(null)
 
-export const useFirebase = () => {
+export const UseFirebase = () => {
   const [initilize, setInitilize] = useState<boolean>(true)
-  const history = useHistory()
 
   useEffect(() => {
     //userがサインインしているか
     auth.onAuthStateChanged((user) => {
       if (!user) {
-        history.push('/signin')
         setInitilize(false)
       }
       console.log('signin', user?.email)
