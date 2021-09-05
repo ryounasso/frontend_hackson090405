@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
 import { auth } from './firebase'
 import firebase from "firebase/app"
+import axios from 'axios'
 
 
 type AuthContextProps = {
@@ -21,6 +22,9 @@ export const UseFirebase = () => {
     //userがサインインしているか
     auth.onAuthStateChanged((user) => {
       //user情報の確認が取れたらinitilizeをfalseにする
+      // let params = new URLSearchParams();
+      // params.append("userId", `${currentUser?.uid}`);
+      // axios.post("http://localhost:8000/users/create", params)
       setCurrentUser(user)
       setInitilize(false)
     })

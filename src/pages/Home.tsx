@@ -8,10 +8,16 @@ import {AuthContext} from "../firebase/context"
 import { DisplayToDoList } from '../components/DisplayToDoList'
 import PlusTodoButton from '../components/PlusTodoButton'
 
+// import chara from '../img/character.png'
+
+
+
 const Home = () => {
   console.log("home rendered")
   const history = useHistory()
   const [todoList, setTodoList] = useState<any[]>([])
+  const [points, setPoints] = useState<number>(0)
+  const [charaState,setCharaState]=useState<any>()
   const {currentUser} = useContext(AuthContext)
 
   useEffect(() => { //ログアウト状態ならサインイン画面へ
@@ -20,7 +26,7 @@ const Home = () => {
         history.push('/signin')
       }
     })
-  },[])
+  },[history])
 
   useEffect(() => {
     axios.get("http://localhost:8000/todos/" + currentUser?.uid).then((res) =>{ 
@@ -28,30 +34,42 @@ const Home = () => {
     }).catch((error) => console.error(error));
   }, [currentUser?.uid])
 
+  useEffect(() => {
+    axios.get("http://localhost:8000/todos/completed_num/" + currentUser?.uid).then((res) => {
+      setPoints(res.data)
+    })
+  }, [])
+
   
   return (
     <Container maxWidth='lg'>
-      <Box display='flex' >
-        <div>
-          <h2>ToDoList</h2>
-          <PlusTodoButton todoList={todoList} setTodoList={setTodoList} />
+      <Box display='flex' justifyContent='space-around'  >
+        <Box width={800}> 
+          <Box display='flex'  >
+            <h2>ToDoList</h2>
+            <PlusTodoButton todoList={todoList} setTodoList={setTodoList} />
+          </Box>
           {todoList.map((todo: any,i:number) => {
             if (!todo.isCompleted) {
               return <DisplayToDoList key={i} todo={todo} todoList={todoList} setTodoList={setTodoList} />}
-            } 
+            }
           )}
-        </div>
-        <div>
+        </Box>
+        <Box width={800}>
           <h2>Completed</h2>
           {todoList.map((todo: any,i:number) => {
           if (todo.isCompleted) {
-            return <DisplayToDoList key={i} todo={todo} todoList={todoList} setTodoList={setTodoList} />}
+            return <DisplayToDoList key={i} todo={todo} todoList={todoList} setTodoList={setTodoList} setPoints={setPoints} />}
           } 
         )}
+        </Box>
+        <div>
+          {/* <img src={chara} alt='icon' /> */}
+          character is here
+          <div>所有ポイント : {points}</div>
         </div>
       </Box>
-        
-        
+      
     </Container>
   )
 }

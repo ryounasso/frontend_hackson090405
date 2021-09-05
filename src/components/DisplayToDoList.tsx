@@ -1,17 +1,48 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Modal from "@material-ui/core/Modal"
-import { Button, Checkbox, FormControlLabel, Input, InputLabel} from '@material-ui/core'
+import { Button, Checkbox, FormControlLabel, Input, InputLabel, makeStyles, Theme} from '@material-ui/core'
 import { Create, Delete } from '@material-ui/icons'
 import axios from 'axios'
+import { AuthContext } from '../firebase/context'
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 export const DisplayToDoList = (props : any) => {
-  const { todo, todoList, setTodoList } = props
+  const { todo, todoList, setTodoList, setPoints } = props
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [title, setTitle] = useState<string>(todo.title)
   const [description, setDescription] = useState<string>(todo.description)
+  const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
+  const {currentUser} = useContext(AuthContext)
 
-  const handleChange = async () => {
-    await axios.post(`http://localhost:8000/todos/toggle_todo/${todo.ID}`)
+  const handleChange = async (isCompleted: any) => {
+      await axios.post(`http://localhost:8000/todos/toggle_todo/${todo.ID}`)
+    
     const newTodoList = todoList.map((t: any, i: number) => {
       if (t.ID === todo.ID) {
         t.isCompleted = !t.isCompleted
@@ -30,6 +61,13 @@ export const DisplayToDoList = (props : any) => {
   const handleEditClose = () => {
     setEditOpen(false)
   }
+
+  const updatePoints = () => {
+    axios.get("http://localhost:8000/todos/completed_num/" + currentUser?.uid).then((res) => {
+      setPoints(res.data)
+    })
+  }
+
   const editTodo = async () => {
     let params = new URLSearchParams();
     params.append("title", title);
@@ -42,6 +80,7 @@ export const DisplayToDoList = (props : any) => {
     })  
 
     setTodoList(newTodoList)
+    updatePoints()
     setEditOpen(false)
   }
   const deleteTodo = async () => {
@@ -58,7 +97,7 @@ export const DisplayToDoList = (props : any) => {
       checked={todo.isCompleted}
       control={<Checkbox color="primary" />}
       label={todo?.title}
-      onChange={handleChange}
+      onChange={() => handleChange(todo.isCompleted)}
       labelPlacement="end"//checkboxの右にlabelの文字を配置
       />
       <Button onClick={handleEditOpen} >
@@ -71,7 +110,7 @@ export const DisplayToDoList = (props : any) => {
         open={editOpen}
         onClose={handleEditClose}
       >
-        <div>
+        <div style={modalStyle} className={classes.paper}>
         <InputLabel>タイトル</InputLabel>
           <Input type="text" value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setTitle(e.target.value);

@@ -4,13 +4,27 @@ import Modal from "@material-ui/core/Modal"
 import { Input, InputLabel } from "@material-ui/core";
 import axios from "axios";
 import { AuthContext } from "../firebase/context";
+import { makeStyles } from "@material-ui/core";
 
-// type Props = {
-//   todoList: any[]
-//   setTodoList: () => void
-// }
+
+const useStyles =makeStyles({
+  modal:{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper:{
+    position:'absolute',
+    background:'#fff',
+    border:'2px solid #000',
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'center'
+  }
+})
 
 const PlusTodoButton = (props: any) => {
+  const classes=useStyles()
   const {todoList, setTodoList} = props
   const {currentUser} = useContext(AuthContext)
   const [open, setOpen] = useState<boolean>(false);
@@ -46,8 +60,9 @@ const PlusTodoButton = (props: any) => {
       <Modal
         open={open}
         onClose={handleClose}
+        className={classes.modal}
       >
-        <div>
+        <div className={classes.paper}>
           <InputLabel>タイトル</InputLabel>
           <Input type="text" value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setTitle(e.target.value);
