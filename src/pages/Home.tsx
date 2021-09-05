@@ -32,7 +32,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8000/todos/' + currentUser?.uid)
+      .get('https://whispering-bayou-86182.herokuapp.com/todos/' + currentUser?.uid)
       .then((res) => {
         setTodoList(res.data)
       })
@@ -41,7 +41,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8000/todos/completed_num/' + currentUser?.uid)
+      .get('https://whispering-bayou-86182.herokuapp.com/todos/completed_num/' + currentUser?.uid)
       .then((res) => {
         setPoints(res.data)
       })

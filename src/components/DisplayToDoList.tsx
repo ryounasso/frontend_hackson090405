@@ -52,7 +52,7 @@ export const DisplayToDoList = (props: any) => {
   const { currentUser } = useContext(AuthContext)
 
   const handleChange = async (isCompleted: any) => {
-    await axios.post(`http://localhost:8000/todos/toggle_todo/${todo.ID}`)
+    await axios.post(`https://whispering-bayou-86182.herokuapp.com/todos/toggle_todo/${todo.ID}`)
 
     const newTodoList = todoList.map((t: any, i: number) => {
       if (t.ID === todo.ID) {
@@ -87,7 +87,7 @@ export const DisplayToDoList = (props: any) => {
 
   const updatePoints = () => {
     axios
-      .get('http://localhost:8000/todos/completed_num/' + currentUser?.uid)
+      .get('https://whispering-bayou-86182.herokuapp.com/todos/completed_num/' + currentUser?.uid)
       .then((res) => {
         setPoints(res.data)
       })
@@ -102,7 +102,7 @@ export const DisplayToDoList = (props: any) => {
     params.append('title', title)
     params.append('description', description)
     let editedTodo = await axios.post(
-      `http://localhost:8000/todos/edit/${todo.ID}`,
+      `https://whispering-bayou-86182.herokuapp.com/todos/edit/${todo.ID}`,
       params
     )
     editedTodo = editedTodo.data
@@ -116,7 +116,7 @@ export const DisplayToDoList = (props: any) => {
     setEditOpen(false)
   }
   const deleteTodo = async () => {
-    await axios.delete(`http://localhost:8000/todos/delete/${todo.ID}`)
+    await axios.delete(`https://whispering-bayou-86182.herokuapp.com/todos/delete/${todo.ID}`)
     const newTodoList = todoList.filter((t: any) => {
       return t.ID !== todo.ID
     })

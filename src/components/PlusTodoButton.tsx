@@ -44,7 +44,7 @@ const PlusTodoButton = (props: any) => {
     params.append('description', description)
     params.append('userId', `${currentUser?.uid}`)
 
-    let newTodo = await axios.post('http://localhost:8000/todos/add', params)
+    let newTodo = await axios.post('https://whispering-bayou-86182.herokuapp.com/todos/add', params)
     newTodo = newTodo.data
     const newTodoList = [...todoList, newTodo]
     setTodoList(newTodoList)
