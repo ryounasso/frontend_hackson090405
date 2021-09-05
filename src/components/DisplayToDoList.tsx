@@ -1,15 +1,28 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Modal from "@material-ui/core/Modal"
 import { Button, Checkbox, FormControlLabel, Input, InputLabel} from '@material-ui/core'
 import { Create, Delete } from '@material-ui/icons'
 import axios from 'axios'
-import { AuthContext } from '../firebase/context'
 
 export const DisplayToDoList = (props : any) => {
   const { todo, todoList, setTodoList } = props
   const [editOpen, setEditOpen] = useState<boolean>(false)
   const [title, setTitle] = useState<string>(todo.title)
   const [description, setDescription] = useState<string>(todo.description)
+
+  const handleChange = async () => {
+    await axios.post(`http://localhost:8000/todos/toggle_todo/${todo.ID}`)
+    const newTodoList = todoList.map((t: any, i: number) => {
+      if (t.ID === todo.ID) {
+        t.isCompleted = !t.isCompleted
+        return t
+      } else {
+        return t
+      }
+    })  
+    console.log(newTodoList)
+    setTodoList(newTodoList)
+  }
 
   const handleEditOpen = () => {
     setEditOpen(true)
@@ -25,8 +38,6 @@ export const DisplayToDoList = (props : any) => {
     editedTodo = editedTodo.data
 
     const newTodoList =todoList.map((value: any, i: number) => {
-      console.log(value)
-      console.log(value.ID === todo.ID)
       return value.ID === todo.ID ? editedTodo : value
     })  
 
@@ -44,8 +55,10 @@ export const DisplayToDoList = (props : any) => {
     <div>
       <FormControlLabel
       value="end"
+      checked={todo.isCompleted}
       control={<Checkbox color="primary" />}
       label={todo?.title}
+      onChange={handleChange}
       labelPlacement="end"//checkboxの右にlabelの文字を配置
       />
       <Button onClick={handleEditOpen} >

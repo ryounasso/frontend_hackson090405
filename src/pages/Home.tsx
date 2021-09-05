@@ -2,7 +2,7 @@
 import { auth } from '../firebase/firebase'
 import { useHistory } from 'react-router'
 import { useEffect, useState, useContext } from 'react'
-import { Container } from '@material-ui/core'
+import { Box, Container } from '@material-ui/core'
 import axios from 'axios'
 import {AuthContext} from "../firebase/context"
 import { DisplayToDoList } from '../components/DisplayToDoList'
@@ -31,9 +31,27 @@ const Home = () => {
   
   return (
     <Container maxWidth='lg'>
-        <h1>ToDoList</h1>
-        <PlusTodoButton todoList={todoList} setTodoList={setTodoList} />
-        {todoList.map((todo: any,i:number) => <DisplayToDoList key={i} todo={todo} todoList={todoList} setTodoList={setTodoList} />)}
+      <Box display='flex' >
+        <div>
+          <h2>ToDoList</h2>
+          <PlusTodoButton todoList={todoList} setTodoList={setTodoList} />
+          {todoList.map((todo: any,i:number) => {
+            if (!todo.isCompleted) {
+              return <DisplayToDoList key={i} todo={todo} todoList={todoList} setTodoList={setTodoList} />}
+            } 
+          )}
+        </div>
+        <div>
+          <h2>Completed</h2>
+          {todoList.map((todo: any,i:number) => {
+          if (todo.isCompleted) {
+            return <DisplayToDoList key={i} todo={todo} todoList={todoList} setTodoList={setTodoList} />}
+          } 
+        )}
+        </div>
+      </Box>
+        
+        
     </Container>
   )
 }
