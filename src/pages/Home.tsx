@@ -53,7 +53,7 @@ const Home = () => {
         <Box width={800}>
           <Box display='flex'>
             <h2>ToDoList</h2>
-            <PlusTodoButton todoList={todoList} setTodoList={setToggle} />
+            <PlusTodoButton todoList={todoList} setTodoList={setTodoList} />
           </Box>
           {todoList.map((todo: any, i: number) => {
             if (!todo.isCompleted) {
